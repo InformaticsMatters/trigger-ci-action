@@ -55,7 +55,7 @@ In this first example we trigger the default type of workflow
 The workflow name being executed is `build main`.
 
 Every trigger needs a user (and user token) that can activate the remote CI
-process.
+process, illustrated here using secrets available to the triggering repository.
 
 ```yaml
 - name: Trigger squonk
@@ -65,8 +65,8 @@ process.
     ci-repository: squonk
     ci-ref: refs/heads/dev-branch
     ci-name: build main
-    ci-user: dlister
-    ci-user-token: 00000000
+    ci-user: ${{ secrets.SQUONK_USER }}
+    ci-user-token: ${{ secrets.SQUONK_USER_TOKEN }}
 ```
 
 ---
