@@ -1,0 +1,62 @@
+---
+name: Trigger CI
+author: Alan B. Christie
+description: Launches a CI build in another repository
+branding:
+  icon: play
+  color: orange
+
+inputs:
+  ci-type:
+    description: >
+      The repository type, i.e. 'github-workflow-dispatch'
+      for workflow-dispatch triggers. Supported values are
+      'github-workflow-dispatch'.
+    required: true
+    default: 'github-workflow-dispatch'
+  ci-owner:
+    description: The repository owner, i.e. 'informaticsmatters'
+    required: true
+  ci-repository:
+    description: The repository, i.e. 'squonk'
+    required: true
+  ci-ref:
+    description: >
+      The fully qualified remote reference, a branch or a tag. Default is
+      'refs/heads/main' but can be a branch, i.e. 'refs/heads/dev-branch'
+      or a tag, i.e. 'refs/tags/2021.3', or any valid reference.
+    required: false
+    default: refs/heads/main
+  ci-user:
+    description: A user that can access the repository
+    required: true
+  ci-user-token:
+    description: The repository user's token
+    required: true
+  ci-name:
+    description: >
+      The name of the remote CI process. In the case of a GitHub workflow
+      this is the name of the workflow (the assigned name in the workflow
+      file, not its filename)
+    required: false
+    default: no-such-name
+  ci-inputs:
+    description: >
+      A space-separated set of inputs and values for the remote CI process.
+      i.e. 'x=100 y=200'
+    required: false
+    default: no-such-input=1
+
+
+runs:
+  using: docker
+  image: Dockerfile
+  args:
+  - ${{ inputs.ci-type }}
+  - ${{ inputs.ci-owner }}
+  - ${{ inputs.ci-repository }}
+  - ${{ inputs.ci-ref }}
+  - ${{ inputs.ci-user }}
+  - ${{ inputs.ci-user-token }}
+  - ${{ inputs.ci-name }}
+  - ${{ inputs.ci-inputs }}
