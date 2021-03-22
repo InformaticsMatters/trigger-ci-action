@@ -2,11 +2,11 @@
 A container-based GitHub Action that triggers execution of a remote CI process.
 This can be used to chain CI builds that might exist in disperate repositories.
 The action essentially alloys the build process in repository
-**A** to trigger a named CI workflow in repository **B**.
+**"A"** to trigger a named CI workflow in repository **"B"**.
 
 The Trigger CI action supports the following CI (trigger) types: -
 
--   GitHub Workflow Dispatch (`ci-type: github-workflow-dispatch`)
+-   **GitHub Workflow Dispatch** (`ci-type: github-workflow-dispatch`)
 
 ## Inputs
 
