@@ -53,6 +53,9 @@ For **GitHub Workflow Dispatch** types these are the _workflow inputs_.
 The inputs are declared here using a space-separated set of names and values, 
 i.e. `target_input_1=xyx target_input_2=abc`.
 
+>   Do not put spaces around the input's '='. The action expects
+    each key and value in the form <key>=<value>.
+
 ## Example usage
 In this first example we trigger the default type of workflow
 (a **GitHub Workflow Dispatch** workflow) on the branch `dev-branch`
