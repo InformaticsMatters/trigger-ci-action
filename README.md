@@ -1,23 +1,24 @@
 # Trigger CI Action
 A container-based GitHub Action that triggers execution of a remote CI process.
 This can be used to chain CI builds that might exist in disperate repositories.
-The action essentially alloys the build process in repository
-**"A"** to trigger a named CI workflow in repository **"B"**.
+The action essentially allows the build process in repository
+**"A"** to trigger a named CI process in repository **"B"**.
 
-The Trigger CI action supports the following CI (trigger) types: -
+The Trigger CI action supports the triggering the following remotes CI
+processes: -
 
 -   **GitHub Workflow Dispatch** (`ci-type: github-workflow-dispatch`)
 
 ## Inputs
 
 ### `ci-type`
-**Optional** The CI type. At the moment we support the following remote CI
-types: -
+**Optional** The type of remote CI process to trigger.
+At the moment we support the following types: -
 
-- github-workflow-dispatch
+- `github-workflow-dispatch`
 
 ### `ci-owner`
-**Required** The repository owner, i.e. `informaticsmatters` if the
+**Required** The remote repository owner, i.e. `informaticsmatters` if the
 remote CI repository is `informaticsmatters/squonk`
 
 ### `ci-repository`
@@ -36,22 +37,25 @@ For older repositories you may have to use this input and
 set it to the old main name, e.g. `refs/heads/master`
 
 ### `ci-user`
-**Required**  A user that can access the remote repository
+**Required** A user that can access the remote repository
 
 ### `ci-user-token`
-**Required**  The repository user's access token
+**Required** The repository user's access token
 
 ### `ci-name`
-**Required**  The name of the remote CI process, for **GitHub Workflow Dispatch**
+**Required** The name of the remote CI process, for **GitHub Workflow Dispatch**
 types this will be the `name` assigned to the workflow you're running, which is
 the `name` defined in the workflow file, _not_ the workflow file name.
 
 ### `ci-inputs`
-**Optional**  The remote repository's build inputs/arguments. If used,
-it sets build arguments and values in the remote CI process.
-For **GitHub Workflow Dispatch** types these are the _workflow inputs_.
+**Optional** The remote repository's build inputs or arguments. If used,
+it is used to set build arguments and values in remote CI processes that
+support this mechanism. For **GitHub Workflow Dispatch** types
+these will be used to set corresponding _workflow inputs_.
 The inputs are declared here using a space-separated set of names and values, 
-i.e. `target_input_1=xyx target_input_2=abc`.
+i.e. `target_input_1=xyx target_input_2=abc`, where `target_input_1` and
+`target_input_2` are inputs declared in the remote workflow's
+`workflow_dispatch` configuration.
 
 >   Do not put spaces around the input's '='. The action expects
     each key and value in the form <key>=<value>.
@@ -62,8 +66,9 @@ In this first example we trigger the default type of workflow
 (`refs/heads/dev-branch`) of the repository `informaticsmatters/squonk`.
 The workflow name being executed is `build main`.
 
-Every trigger needs a user (and user token) that can activate the remote CI
-process, illustrated here using secrets available to the triggering repository.
+>   Every trigger needs a user (and user token) that can activate the remote CI
+    process, illustrated here using secrets available to the triggering
+    repository's workflow.
 
 ```yaml
 - name: Trigger squonk
