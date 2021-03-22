@@ -30,6 +30,11 @@ It's the fully qualified remote reference, a branch or a tag. Default is
 `refs/heads/main`, but can be a branch, i.e. `refs/heads/dev-branch`
 or a tag, i.e. `refs/tags/2021.3`, or any valid reference.
 
+For _new-style_ GitHub repositories the default will be sufficient to trigger
+a build on the main branch (where the main branch is now called `main`).
+For older repositories you may have to use this input and
+set it to the old main name, e.g. `refs/heads/master`
+
 ### `ci-user`
 **Required**  A user that can access the remote repository
 
@@ -65,6 +70,27 @@ process, illustrated here using secrets available to the triggering repository.
     ci-repository: squonk
     ci-ref: refs/heads/dev-branch
     ci-name: build main
+    ci-user: ${{ secrets.SQUONK_USER }}
+    ci-user-token: ${{ secrets.SQUONK_USER_TOKEN }}
+```
+
+If the remote CI process accepts inputs we can provide values for them using
+the action's `ci-inputs` property by providing a space-separated set of
+keys and values.
+
+Here we provide values `xyz` and `abc` for the inputs `target_input_1` and
+`target_input_2`: -
+
+```yaml
+- name: Trigger squonk with inputs
+  uses: informaticsmatters/trigger-ci-action@v1
+  with:
+    ci-owner: informaticsmatters
+    ci-repository: squonk
+    ci-name: build main
+    ci-inputs: >-
+      target_input_1=xyx
+      target_input_2=abc
     ci-user: ${{ secrets.SQUONK_USER }}
     ci-user-token: ${{ secrets.SQUONK_USER_TOKEN }}
 ```
